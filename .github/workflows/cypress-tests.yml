@@ -18,6 +18,8 @@ jobs:
     needs: dependency
     steps:
       - uses: actions/checkout@v3
-      - name: Run tests
-        run: npx cypress run
+      - name: Run Cypress tests
+        run: |
+          npx cypress run --config-file ./testCascade/cypress.config.js
+        working-directory: ${{ github.workspace }}
 
