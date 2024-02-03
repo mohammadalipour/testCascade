@@ -17,7 +17,9 @@ jobs:
     needs: checkout
     steps:
       - name: Install dependencies
-        run: npm install cypress --save-dev
+        run: |
+          npm install
+          npx cypress install
 
   run-test:
     runs-on: ubuntu-latest
