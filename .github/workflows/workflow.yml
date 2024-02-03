@@ -38,8 +38,8 @@ jobs:
       - name: Print current directory
         run: |
           echo "Current directory: ${{ github.workspace }}"
-        working-directory: ${{ github.workspace }}
+        working-directory: ../${{ github.workspace }}
 
       - name: Run Cypress tests
         run: npx cypress run
-        working-directory: ${{ github.workspace }}
+        working-directory: ../${{ github.workspace }}
