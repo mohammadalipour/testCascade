@@ -35,6 +35,11 @@ jobs:
         with:
           node-version: 14
 
+      - name: Print current directory
+        run: |
+          echo "Current directory: $(pwd)"
+        working-directory: ${{ github.workspace }}
+
       - name: Run Cypress tests
         run: npx cypress run
         working-directory: ${{ github.workspace }}
