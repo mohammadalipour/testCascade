@@ -4,7 +4,7 @@
 
 ## Overview
 
-TestCascade is an End-to-End (E2E) testing suite designed to ensure the proper functioning of the [Your Project Name] application. These tests cover various user interactions and workflows to validate the application's behavior in real-world scenarios.
+TestCascade is an End-to-End (E2E) testing 
 
 ## Installation
 
