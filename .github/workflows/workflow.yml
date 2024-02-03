@@ -6,11 +6,18 @@ on:
       - main
 
 jobs:
-  test:
+  dependency:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
         run: npm install cypress --save-dev
+
+  test:
+    runs-on: ubuntu-latest
+    needs: dependency
+    steps:
+      - uses: actions/checkout@v3
       - name: Run tests
         run: npx cypress run
+
