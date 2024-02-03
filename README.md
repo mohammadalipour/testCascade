@@ -35,6 +35,7 @@ Before running the E2E tests, make sure you have the following dependencies inst
 
     ```bash
     cd testcascade
+    npm install cypress --save-dev
     npx cypress run
     ```
 
