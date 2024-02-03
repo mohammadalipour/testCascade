@@ -37,7 +37,7 @@ jobs:
 
       - name: Print current directory
         run: |
-          echo "Current directory: $(pwd)"
+          echo "Current directory: ${{ github.workspace }}"
         working-directory: ${{ github.workspace }}
 
       - name: Run Cypress tests
