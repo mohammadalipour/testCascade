@@ -1,45 +1,68 @@
-name: Cypress E2E Test
+name: Cypress Tests
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  checkout:
+  # Install dependencies and run e2e tests
+  e2e-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-  install:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-
+      - uses: actions/checkout@v3
       - name: Install dependencies
-        run: |
-          npm install
-          npx cypress install
+        run: npm install
+      - name: Run e2e tests
+        run: npm run test:e2e
+        env:
+          CYPRESS_RECORD_KEY: "your_recording_key"  # Optional for Cypress Cloud recording
 
-  cypress-test:
+  # Run component tests
+  component-tests:
     runs-on: ubuntu-latest
-    needs: [checkout, install]
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run component tests
+        run: npm run test:component
+
+  # Run tests in Chrome and Firefox (or other browsers)
+  multi-browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests in Chrome
+        run: npm run test:e2e -- --browser=chrome
+      - name: Run tests in Firefox
+        run: npm run test:e2e -- --browser=firefox
+
+  # Run tests with different configurations (e.g., staging environment)
+  staging-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests against staging environment
+        run: npm run test:e2e -- --config=staging.json
+
+  # Upload test results artifacts
+  upload-artifacts:
+    runs-on: ubuntu-latest
+    needs: [e2e-tests, component-tests, multi-browser, staging-tests]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
         with:
-          node-version: 14
+          name: cypress-test-results
+          path: cypress/videos || cypress/screenshots || test-results.xml
 
-      - name: Print current directory
-        run: |
-          echo "Current directory: ${{ github.workspace }}"
-        working-directory: ../${{ github.workspace }}
-
-      - name: Run Cypress tests
-        run: npx cypress run
-        working-directory: ../${{ github.workspace }}
+# Customize these details
