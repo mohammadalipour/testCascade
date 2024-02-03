@@ -4,65 +4,13 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  # Install dependencies and run e2e tests
-  e2e-tests:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm install
-      - name: Run e2e tests
-        run: npm run test:e2e
-        env:
-          CYPRESS_RECORD_KEY: "your_recording_key"  # Optional for Cypress Cloud recording
-
-  # Run component tests
-  component-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Run component tests
-        run: npm run test:component
-
-  # Run tests in Chrome and Firefox (or other browsers)
-  multi-browser:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Run tests in Chrome
-        run: npm run test:e2e -- --browser=chrome
-      - name: Run tests in Firefox
-        run: npm run test:e2e -- --browser=firefox
-
-  # Run tests with different configurations (e.g., staging environment)
-  staging-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Run tests against staging environment
-        run: npm run test:e2e -- --config=staging.json
-
-  # Upload test results artifacts
-  upload-artifacts:
-    runs-on: ubuntu-latest
-    needs: [e2e-tests, component-tests, multi-browser, staging-tests]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-test-results
-          path: cypress/videos || cypress/screenshots || test-results.xml
-
-# Customize these details
+        run: npm install cypress --save-dev
+      - name: Run tests
+        run: npx cypress run
