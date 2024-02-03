@@ -16,12 +16,25 @@ jobs:
     runs-on: ubuntu-latest
     needs: checkout
     steps:
-      - name: Install dependencies
-        run: npm install cypress --save-dev
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
-  run-test:
+      - name: Install dependencies
+        run: |
+          npm install
+          npx cypress install
+
+  cypress-test:
     runs-on: ubuntu-latest
     needs: [checkout, install]
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
       - name: Run Cypress tests
         run: npx cypress run
+        working-directory: ./
