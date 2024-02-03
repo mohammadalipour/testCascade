@@ -21,7 +21,3 @@ TestCascade is an End-to-End (E2E) testing suite designed to ensure the proper f
     npm install cypress --save-dev
     npx cypress run
     ```
-
-## Configuration
-
-Configure TestCascade by updating the configuration files located in [config](/config) directory. Update settings such as base URLs, credentials, etc., according to your testing environment.
