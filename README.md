@@ -11,7 +11,7 @@ TestCascade is an End-to-End (E2E) testing suite designed to ensure the proper f
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/yourusername/testcascade.git
+    git clone https://github.com/mohammadalipour/testCascade.git
     ```
 
 2. Install dependencies:
