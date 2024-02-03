@@ -37,5 +37,5 @@ jobs:
 
       - name: Run Cypress tests
         run: |
-          npx cypress run
+          npx cypress run --config-file $(pwd)/cypress.json
         working-directory: ${{ github.workspace }}
